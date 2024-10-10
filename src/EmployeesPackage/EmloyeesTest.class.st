@@ -38,6 +38,11 @@ EmloyeesTest >> createNewEmployee [
         self addEmployee: newEmployee.
 ]
 
+{ #category : 'accessing' }
+EmloyeesTest >> employees [ 
+    ^employees
+]
+
 { #category : 'examples' }
 EmloyeesTest >> example [
 
@@ -104,6 +109,84 @@ EmloyeesTest >> example [
 ]
 
 { #category : 'as yet unclassified' }
+EmloyeesTest >> generateCSVFormat [ 
+    | csv |
+    csv := String streamContents: [ :stream |
+        employees do: [ :employee |
+            stream
+                nextPutAll: employee class name; nextPut: $,;
+                nextPutAll: employee surname; nextPut: $,;
+                nextPutAll: employee experience asString; nextPut: $,;
+                nextPutAll: employee hourlyRate asString; nextPut: $,;
+                nextPutAll: employee minimumHours asString.
+            employee class = Programmer ifTrue: [
+                stream nextPut: $,; nextPutAll: employee actualHours asString.
+            ].
+            employee class = Manager ifTrue: [
+                stream nextPut: $,; nextPutAll: employee subordinates asString.
+            ].
+            stream cr.
+        ].
+    ].
+    ^csv
+
+]
+
+{ #category : 'as yet unclassified' }
+EmloyeesTest >> generateJSONFormat [ 
+    | json |
+    json := String streamContents: [ :stream |
+        stream nextPutAll: '['.
+        employees withIndexDo: [ :employee :index |
+            stream nextPutAll: '{ "type": "', employee class name, '", '.
+            stream nextPutAll: '"surname": "', employee surname, '", '.
+            stream nextPutAll: '"experience": ', employee experience asString, ', '.
+            stream nextPutAll: '"hourlyRate": ', employee hourlyRate asString, ', '.
+            stream nextPutAll: '"minimumHours": ', employee minimumHours asString.
+            employee class = Programmer ifTrue: [
+                stream nextPutAll: ', "actualHours": ', employee actualHours asString.
+            ].
+            employee class = Manager ifTrue: [
+                stream nextPutAll: ', "subordinates": ', employee subordinates asString.
+            ].
+            stream nextPutAll: ' }'.
+            index < employees size ifTrue: [
+                stream nextPutAll: ','.
+            ].
+        ].
+        stream nextPutAll: ']' ; cr.
+    ].
+    ^json
+
+]
+
+{ #category : 'as yet unclassified' }
+EmloyeesTest >> generateXMLFormat [ 
+    | xml |
+    xml := String streamContents: [ :stream |
+        stream nextPutAll: '<employees>'; cr.
+        employees do: [ :employee |
+            stream
+                nextPutAll: '<employee type="', employee class name, '">'; cr;
+                nextPutAll: '<surname>', employee surname, '</surname>'; cr;
+                nextPutAll: '<experience>', employee experience asString, '</experience>'; cr;
+                nextPutAll: '<hourlyRate>', employee hourlyRate asString, '</hourlyRate>'; cr;
+                nextPutAll: '<minimumHours>', employee minimumHours asString, '</minimumHours>'; cr.
+            employee class = Programmer ifTrue: [
+                stream nextPutAll: '<actualHours>', employee actualHours asString, '</actualHours>'; cr.
+            ].
+            employee class = Manager ifTrue: [
+                stream nextPutAll: '<subordinates>', employee subordinates asString, '</subordinates>'; cr.
+            ].
+            stream nextPutAll: '</employee>'; cr.
+        ].
+        stream nextPutAll: '</employees>'; cr.
+    ].
+    ^xml
+
+]
+
+{ #category : 'as yet unclassified' }
 EmloyeesTest >> highestPaidEmployee [
 
 	| highestPaid |
@@ -121,11 +204,86 @@ EmloyeesTest >> initialize [
 employees := OrderedCollection new.
 ]
 
+{ #category : 'accessing' }
+EmloyeesTest >> managers [ 
+    ^managers
+]
+
 { #category : 'printing' }
 EmloyeesTest >> printEmployees [
 
 	employees do: [ :employee | employee printOn: Transcript. Transcript cr].
 	Transcript cr.
+]
+
+{ #category : 'accessing' }
+EmloyeesTest >> programmers [ 
+    ^programmers
+]
+
+{ #category : 'as yet unclassified' }
+EmloyeesTest >> readEmployeesFromFile: filePath [ 
+    | fileStream line employeeType surname experience hourlyRate minHours actualHours subordinates newEmployee |
+    
+    "Open the file for reading"
+    fileStream := (FileSystem workingDirectory / filePath) readStream.
+    
+    [ fileStream atEnd ] whileFalse: [
+        line := fileStream nextLine.
+        (line isEmpty) ifFalse: [
+            "Split the line by commas"
+            line := line findTokens: ','.
+            
+            "Assign variables based on the content"
+            employeeType := line first.
+            surname := line second.
+            experience := (line third) asInteger.
+            hourlyRate := (line fourth) asInteger.
+            minHours := (line fifth) asInteger.
+            
+            "Determine the type of employee and create the appropriate instance"
+            employeeType = 'Programmer' ifTrue: [
+                actualHours := (line sixth) asInteger.
+                newEmployee := Programmer surname: surname experience: experience hourlyRate: hourlyRate minimumHours: minHours actualHours: actualHours.
+            ].
+            employeeType = 'Manager' ifTrue: [
+                subordinates := (line sixth) asInteger.
+                newEmployee := Manager surname: surname experience: experience hourlyRate: hourlyRate minimumHours: minHours subordinates: subordinates.
+            ].
+            employeeType = 'Employee' ifTrue: [
+                newEmployee := Employee surname: surname experience: experience hourlyRate: hourlyRate minimumHours: minHours.
+            ].
+            
+            "Add the newly created employee to the employees collection"
+            self addEmployee: newEmployee.
+        ].
+    ].
+    fileStream close.
+
+]
+
+{ #category : 'as yet unclassified' }
+EmloyeesTest >> saveEmployeesToFile: filePath inFormat: format [ 
+    | fileStream formattedData |
+    
+    "Check format type and generate data accordingly"
+    format = 'CSV' ifTrue: [
+        formattedData := self generateCSVFormat.
+    ].
+    format = 'JSON' ifTrue: [
+        formattedData := self generateJSONFormat.
+    ].
+    format = 'XML' ifTrue: [
+        formattedData := self generateXMLFormat.
+    ].
+    
+    "Write the formatted data to the file"
+    fileStream := (FileSystem workingDirectory / filePath) writeStream.
+    fileStream nextPutAll: formattedData.
+    fileStream close.
+    
+    Transcript show: 'Employees saved to ', filePath, ' in ', format, ' format'; cr.
+
 ]
 
 { #category : 'as yet unclassified' }

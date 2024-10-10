@@ -8,6 +8,22 @@ Class {
 	#package : 'EmployeesPackage'
 }
 
+{ #category : 'as yet unclassified' }
+Manager class >> surname: aSurname experience: anExperience hourlyRate: anHourlyRate minimumHours: aMinimumHours subordinates: aSubordinates [
+        ^self new
+            surname: aSurname;
+            experience: anExperience;
+            hourlyRate: anHourlyRate;
+            minimumHours: aMinimumHours;
+            subordinates: aSubordinates;
+            yourself
+]
+
+{ #category : 'arithmetic' }
+Manager >> + aSubordinates [
+self subordinates: self subordinates + aSubordinates 
+]
+
 { #category : 'initialization' }
 Manager >> initialize [
     super initialize.

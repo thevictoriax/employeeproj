@@ -12,8 +12,29 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
+Employee class >> surname: aSurname experience: anExperience hourlyRate: anHourlyRate minimumHours: aMinimimHours [
+
+	^ self new
+		  surname: aSurname;
+		  experience: anExperience;
+		  hourlyRate: anHourlyRate;
+		  minimumHours: aMinimimHours.
+]
+
+{ #category : 'comparing' }
+Employee >> < anEmloyee [
+^ self salary < anEmloyee salary 
+]
+
+{ #category : 'as yet unclassified' }
 Employee >> = anEmployee [
     ^self salary = anEmployee salary
+]
+
+{ #category : 'comparing' }
+Employee >> > anEmloyee [
+
+	^ self salary > anEmloyee salary
 ]
 
 { #category : 'as yet unclassified' }
@@ -53,12 +74,12 @@ Employee >> minimumHours: anObject [
 
 { #category : 'printing' }
 Employee >> printOn: aStream [
-    super printOn: aStream.
-    aStream
-        nextPutAll: 'Surname: ', surname;
-        nextPutAll: ' Experience: ', experience asString;
-        nextPutAll: ' Hourly Rate: ', hourlyRate asString;
-        nextPutAll: ' Minimum Hours: ', minimumHours asString.
+
+	super printOn: aStream.
+	aStream
+		nextPutAll: ' Surname: ' , self surname;
+		nextPutAll: ' Experience: ' , self experience asString;
+		nextPutAll: ' Salary: ' , self salary asString.
 ]
 
 { #category : 'as yet unclassified' }

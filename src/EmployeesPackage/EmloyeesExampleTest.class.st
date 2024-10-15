@@ -1,31 +1,31 @@
 Class {
-	#name : 'EmloyeesTestTest',
+	#name : 'EmloyeesExampleTest',
 	#superclass : 'TestCase',
 	#category : 'EmployeesPackage',
 	#package : 'EmployeesPackage'
 }
 
 { #category : 'running' }
-EmloyeesTestTest >> setUp [ 
+EmloyeesExampleTest >> setUp [ 
         | employeesTest |
-			employeesTest := EmloyeesTest new.
+			employeesTest := EmloyeesExample new.
          employeesTest initialize.
 
 	"Put here a common initialization logic for tests"
 ]
 
 { #category : 'running' }
-EmloyeesTestTest >> tearDown [
+EmloyeesExampleTest >> tearDown [
 	| employeesTest |
 	employeesTest := nil.
 ]
 
 { #category : 'tests' }
-EmloyeesTestTest >> testAddEmployeeAndHighestPaid [ 
+EmloyeesExampleTest >> testAddEmployeeAndHighestPaid [ 
     | highestPaidEmployee employeesTest |
     
     "Initialize the employeesTest object"
-    employeesTest := EmloyeesTest new.
+    employeesTest := EmloyeesExample new.
     employeesTest initialize.
     
     "Add employees"
@@ -42,7 +42,7 @@ EmloyeesTestTest >> testAddEmployeeAndHighestPaid [
 ]
 
 { #category : 'tests' }
-EmloyeesTestTest >> testEmployeeComparison [ 
+EmloyeesExampleTest >> testEmployeeComparison [ 
     | employee1 employee2 |
     employee1 := Employee surname: 'Smith' experience: 5 hourlyRate: 100 minimumHours: 40.
     employee2 := Employee surname: 'Doe' experience: 10 hourlyRate: 80 minimumHours: 40.
@@ -53,14 +53,14 @@ EmloyeesTestTest >> testEmployeeComparison [
 ]
 
 { #category : 'tests' }
-EmloyeesTestTest >> testEmployeeSalary [ 
+EmloyeesExampleTest >> testEmployeeSalary [ 
     | employee |
     employee := Employee surname: 'Smith' experience: 5 hourlyRate: 100 minimumHours: 40.
     self assert: (employee salary = 4000).
 ]
 
 { #category : 'tests' }
-EmloyeesTestTest >> testManagerAddSubordinates [ 
+EmloyeesExampleTest >> testManagerAddSubordinates [ 
     | manager |
     manager := Manager surname: 'Bob' experience: 15 hourlyRate: 150 minimumHours: 45 subordinates: 5.
     manager + 3.
@@ -69,7 +69,7 @@ EmloyeesTestTest >> testManagerAddSubordinates [
 ]
 
 { #category : 'tests' }
-EmloyeesTestTest >> testManagerSalary [ 
+EmloyeesExampleTest >> testManagerSalary [ 
       | manager expectedSalary |
     
     "Create a new manager"
@@ -83,7 +83,7 @@ EmloyeesTestTest >> testManagerSalary [
 ]
 
 { #category : 'tests' }
-EmloyeesTestTest >> testProgrammerAddHours [ 
+EmloyeesExampleTest >> testProgrammerAddHours [ 
     | programmer |
     programmer := Programmer surname: 'Alice' experience: 8 hourlyRate: 100 minimumHours: 40 actualHours: 50.
     programmer + 5.
@@ -92,7 +92,7 @@ EmloyeesTestTest >> testProgrammerAddHours [
 ]
 
 { #category : 'tests' }
-EmloyeesTestTest >> testProgrammerSalary [ 
+EmloyeesExampleTest >> testProgrammerSalary [ 
     | programmer |
     programmer := Programmer surname: 'Alice' experience: 8 hourlyRate: 100 minimumHours: 40 actualHours: 50.
     
@@ -100,11 +100,11 @@ EmloyeesTestTest >> testProgrammerSalary [
 ]
 
 { #category : 'tests' }
-EmloyeesTestTest >> testReadEmployeesFromFile [ 
+EmloyeesExampleTest >> testReadEmployeesFromFile [ 
      | employeesTest filePath |
 
     "Initialize employeesTest"
-    employeesTest := EmloyeesTest new.
+    employeesTest := EmloyeesExample new.
     employeesTest initialize.
 
     "Define the input file path"
@@ -118,11 +118,11 @@ EmloyeesTestTest >> testReadEmployeesFromFile [
 ]
 
 { #category : 'tests' }
-EmloyeesTestTest >> testSaveEmployeesToFile [ 
+EmloyeesExampleTest >> testSaveEmployeesToFile [ 
     | employeesTest filePath |
 
     "Initialize employeesTest"
-    employeesTest := EmloyeesTest new.
+    employeesTest := EmloyeesExample new.
     employeesTest initialize.
 
     "Add some employees to the test collection"
@@ -140,11 +140,11 @@ EmloyeesTestTest >> testSaveEmployeesToFile [
 ]
 
 { #category : 'tests' }
-EmloyeesTestTest >> testSeparateEmployees [ 
+EmloyeesExampleTest >> testSeparateEmployees [ 
     | employeesTest |
 
 	"Initialize employeesTest"
-    employeesTest := EmloyeesTest new.
+    employeesTest := EmloyeesExample new.
     employeesTest initialize.
 
 	employeesTest addEmployee: (Programmer surname: 'Alice' experience: 8 hourlyRate: 100 minimumHours: 40 actualHours: 50).

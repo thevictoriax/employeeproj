@@ -1,5 +1,5 @@
 Class {
-	#name : 'EmloyeesTest',
+	#name : 'EmloyeesExample',
 	#superclass : 'Object',
 	#instVars : [
 		'employees',
@@ -11,12 +11,12 @@ Class {
 }
 
 { #category : 'adding' }
-EmloyeesTest >> addEmployee: anEmployee [ 
+EmloyeesExample >> addEmployee: anEmployee [ 
         employees add: anEmployee.
 ]
 
 { #category : 'as yet unclassified' }
-EmloyeesTest >> createNewEmployee [
+EmloyeesExample >> createNewEmployee [
         | surname experience hourlyRate minHours employeeType actualHours subordinates newEmployee |
         surname := UIManager default request: 'Enter surname'.
         experience := (UIManager default request: 'Enter experience in years') asInteger.
@@ -39,12 +39,12 @@ EmloyeesTest >> createNewEmployee [
 ]
 
 { #category : 'accessing' }
-EmloyeesTest >> employees [ 
+EmloyeesExample >> employees [ 
     ^employees
 ]
 
 { #category : 'examples' }
-EmloyeesTest >> example [
+EmloyeesExample >> example [
 
 	| highestPaidEmployee programmer manager|
 	self addEmployee: (Programmer
@@ -109,7 +109,7 @@ EmloyeesTest >> example [
 ]
 
 { #category : 'as yet unclassified' }
-EmloyeesTest >> generateCSVFormat [ 
+EmloyeesExample >> generateCSVFormat [ 
     | csv |
     csv := String streamContents: [ :stream |
         employees do: [ :employee |
@@ -133,7 +133,7 @@ EmloyeesTest >> generateCSVFormat [
 ]
 
 { #category : 'as yet unclassified' }
-EmloyeesTest >> generateJSONFormat [ 
+EmloyeesExample >> generateJSONFormat [ 
     | json |
     json := String streamContents: [ :stream |
         stream nextPutAll: '['.
@@ -161,7 +161,7 @@ EmloyeesTest >> generateJSONFormat [
 ]
 
 { #category : 'as yet unclassified' }
-EmloyeesTest >> generateXMLFormat [ 
+EmloyeesExample >> generateXMLFormat [ 
     | xml |
     xml := String streamContents: [ :stream |
         stream nextPutAll: '<employees>'; cr.
@@ -187,7 +187,7 @@ EmloyeesTest >> generateXMLFormat [
 ]
 
 { #category : 'as yet unclassified' }
-EmloyeesTest >> highestPaidEmployee [
+EmloyeesExample >> highestPaidEmployee [
 
 	| highestPaid |
 	highestPaid := nil.
@@ -200,29 +200,29 @@ EmloyeesTest >> highestPaidEmployee [
 ]
 
 { #category : 'initialization' }
-EmloyeesTest >> initialize [ 
+EmloyeesExample >> initialize [ 
 employees := OrderedCollection new.
 ]
 
 { #category : 'accessing' }
-EmloyeesTest >> managers [ 
+EmloyeesExample >> managers [ 
     ^managers
 ]
 
 { #category : 'printing' }
-EmloyeesTest >> printEmployees [
+EmloyeesExample >> printEmployees [
 
 	employees do: [ :employee | employee printOn: Transcript. Transcript cr].
 	Transcript cr.
 ]
 
 { #category : 'accessing' }
-EmloyeesTest >> programmers [ 
+EmloyeesExample >> programmers [ 
     ^programmers
 ]
 
 { #category : 'as yet unclassified' }
-EmloyeesTest >> readEmployeesFromFile: filePath [ 
+EmloyeesExample >> readEmployeesFromFile: filePath [ 
     | fileStream line employeeType surname experience hourlyRate minHours actualHours subordinates newEmployee |
     
     "Open the file for reading"
@@ -263,7 +263,7 @@ EmloyeesTest >> readEmployeesFromFile: filePath [
 ]
 
 { #category : 'as yet unclassified' }
-EmloyeesTest >> saveEmployeesToFile: filePath inFormat: format [ 
+EmloyeesExample >> saveEmployeesToFile: filePath inFormat: format [ 
     | fileStream formattedData |
     
     "Check format type and generate data accordingly"
@@ -287,7 +287,7 @@ EmloyeesTest >> saveEmployeesToFile: filePath inFormat: format [
 ]
 
 { #category : 'as yet unclassified' }
-EmloyeesTest >> separateEmployees [
+EmloyeesExample >> separateEmployees [
 
 	managers := employees select: [ :employee | employee class = Manager ].
 	programmers := employees select: [ :employee |

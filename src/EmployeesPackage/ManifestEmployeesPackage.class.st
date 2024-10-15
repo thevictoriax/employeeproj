@@ -13,14 +13,14 @@ Class {
 ManifestEmployeesPackage class >> ruleCodeCruftLeftInMethodsRuleV1FalsePositive [
 
 	<ignoreForCoverage>
-	^ #(#(#(#RGMethodDefinition #(#EmloyeesTest #separateEmployees #false)) #'2024-10-10T23:13:37.219+03:00') )
+	^ #(#(#(#RGMethodDefinition #(#EmloyeesExample #separateEmployees #false)) #'2024-10-10T23:13:37.219+03:00') )
 ]
 
 { #category : 'code-critics' }
 ManifestEmployeesPackage class >> ruleSentNotImplementedRuleV1FalsePositive [
 
 	<ignoreForCoverage>
-	^ #(#(#(#RGClassDefinition #(#EmloyeesTestTest)) #'2024-10-10T23:21:45.869+03:00') )
+	^ #(#(#(#RGClassDefinition #(#EmloyeesExampleTest)) #'2024-10-10T23:21:45.869+03:00') )
 ]
 
 { #category : 'code-critics' }

@@ -5,94 +5,134 @@ Class {
 		'surname',
 		'experience',
 		'hourlyRate',
-		'minimumHours'
+		'minimumHours',
+		'id',
+		'companyId'
 	],
 	#category : 'EmployeesPackage',
 	#package : 'EmployeesPackage'
 }
 
 { #category : 'as yet unclassified' }
-Employee class >> surname: aSurname experience: anExperience hourlyRate: anHourlyRate minimumHours: aMinimimHours [
+Employee class >> surname: arg1 experience: arg2 hourlyRate: arg3 minimumHours: arg4 [
 
-	^ self new
-		  surname: aSurname;
-		  experience: anExperience;
-		  hourlyRate: anHourlyRate;
-		  minimumHours: aMinimimHours.
+	| tmp2 |
+	tmp2 := self new.
+	tmp2
+		surname: arg1;
+		experience: arg2;
+		hourlyRate: arg3.
+	^ tmp2 minimumHours: arg4
 ]
 
 { #category : 'comparing' }
-Employee >> < anEmloyee [
-^ self salary < anEmloyee salary 
+Employee >> < arg1 [
+
+	^ self salary < arg1 salary
 ]
 
 { #category : 'as yet unclassified' }
-Employee >> = anEmployee [
-    ^self salary = anEmployee salary
+Employee >> = arg1 [
+
+	^ self salary = arg1 salary
 ]
 
 { #category : 'comparing' }
-Employee >> > anEmloyee [
+Employee >> > arg1 [
 
-	^ self salary > anEmloyee salary
+	^ self salary > arg1 salary
+]
+
+{ #category : 'accessing' }
+Employee >> companyId [
+
+	^ companyId
+]
+
+{ #category : 'accessing' }
+Employee >> companyId: anObject [
+
+	companyId := anObject
 ]
 
 { #category : 'as yet unclassified' }
 Employee >> experience [
-    ^experience
+
+	^ experience
 ]
 
 { #category : 'as yet unclassified' }
-Employee >> experience: anObject [
-    experience := anObject
+Employee >> experience: arg1 [
+
+	experience := arg1
 ]
 
 { #category : 'as yet unclassified' }
 Employee >> hash [
-    ^self salary hash
+
+	^ self salary hash
 ]
 
 { #category : 'as yet unclassified' }
 Employee >> hourlyRate [
-    ^hourlyRate
+
+	^ hourlyRate
 ]
 
 { #category : 'as yet unclassified' }
-Employee >> hourlyRate: anObject [
-    hourlyRate := anObject
+Employee >> hourlyRate: arg1 [
+
+	hourlyRate := arg1
+]
+
+{ #category : 'accessing' }
+Employee >> id [
+
+	^ id
+]
+
+{ #category : 'accessing' }
+Employee >> id: anObject [
+
+	id := anObject
 ]
 
 { #category : 'as yet unclassified' }
 Employee >> minimumHours [
-    ^minimumHours
+
+	^ minimumHours
 ]
 
 { #category : 'as yet unclassified' }
-Employee >> minimumHours: anObject [
-    minimumHours := anObject
+Employee >> minimumHours: arg1 [
+
+	minimumHours := arg1
 ]
 
 { #category : 'printing' }
-Employee >> printOn: aStream [
+Employee >> printOn: arg1 [
 
-	super printOn: aStream.
-	aStream
+	super printOn: arg1.
+	arg1
 		nextPutAll: ' Surname: ' , self surname;
 		nextPutAll: ' Experience: ' , self experience asString;
-		nextPutAll: ' Salary: ' , self salary asString.
+		nextPutAll: ' Salary: ' , self salary asString
 ]
 
 { #category : 'as yet unclassified' }
 Employee >> salary [
-    ^hourlyRate * minimumHours
+
+	^ hourlyRate * minimumHours
 ]
 
 { #category : 'as yet unclassified' }
 Employee >> surname [
-    ^surname
+
+	^ surname
 ]
 
 { #category : 'as yet unclassified' }
-Employee >> surname: anObject [
-    surname := anObject
+Employee >> surname: arg1 [
+
+	surname := arg1
 ]

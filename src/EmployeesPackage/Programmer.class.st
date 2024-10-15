@@ -9,33 +9,40 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-Programmer class >> surname: aSurname experience: anExperience hourlyRate: anHourlyRate minimumHours: aMinimumHours actualHours: anActualHours [
-        ^self new
-            surname: aSurname;
-            experience: anExperience;
-            hourlyRate: anHourlyRate;
-            minimumHours: aMinimumHours;
-            actualHours: anActualHours.
+Programmer class >> surname: arg1 experience: arg2 hourlyRate: arg3 minimumHours: arg4 actualHours: arg5 [
+
+	| tmp2 |
+	tmp2 := self new.
+	tmp2
+		surname: arg1;
+		experience: arg2;
+		hourlyRate: arg3;
+		minimumHours: arg4.
+	^ tmp2 actualHours: arg5
 ]
 
 { #category : 'arithmetic' }
-Programmer >> + aHours [
-self actualHours: self actualHours + aHours.
+Programmer >> + arg1 [
+
+	self actualHours: self actualHours + arg1
 ]
 
 { #category : 'as yet unclassified' }
 Programmer >> actualHours [
-    ^actualHours
+
+	^ actualHours
 ]
 
 { #category : 'accessing' }
-Programmer >> actualHours: anObject [
-    actualHours := anObject
+Programmer >> actualHours: arg1 [
+
+	actualHours := arg1
 ]
 
 { #category : 'as yet unclassified' }
 Programmer >> salary [
-    actualHours < minimumHours
-        ifTrue: [^hourlyRate * actualHours * 0.75]
-        ifFalse: [^hourlyRate * actualHours]
+
+	actualHours < minimumHours ifTrue: [
+		^ hourlyRate * actualHours * 0.75 ].
+	^ hourlyRate * actualHours
 ]

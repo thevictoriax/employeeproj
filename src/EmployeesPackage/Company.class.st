@@ -3,7 +3,8 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'name',
-		'employees'
+		'employees',
+		'id'
 	],
 	#category : 'EmployeesPackage',
 	#package : 'EmployeesPackage'
@@ -39,10 +40,26 @@ Company >> hire: anEmployee [
     employees add: anEmployee.
 ]
 
+{ #category : 'accessing' }
+Company >> id [
+^ id
+]
+
+{ #category : 'accessing' }
+Company >> id: anId [
+id := anId.
+]
+
 { #category : 'initialization' }
 Company >> initialize [
     super initialize.
     employees := OrderedCollection new.
+]
+
+{ #category : 'accessing' }
+Company >> name [
+
+	^ name
 ]
 
 { #category : 'initialization' }

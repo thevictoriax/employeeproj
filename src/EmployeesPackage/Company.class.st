@@ -25,6 +25,11 @@ Company >> checkProgrammers [
     ^programmerCollection allSatisfy: [:prog | prog actualHours >= prog minimumHours].
 ]
 
+{ #category : 'accessing' }
+Company >> employees: anEmployees [
+employees := anEmployees 
+]
+
 { #category : 'as yet unclassified' }
 Company >> fire: anEmployee [
     employees remove: anEmployee ifAbsent: [^self error: 'Employee not found'].

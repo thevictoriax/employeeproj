@@ -65,7 +65,8 @@ EmployeeRepository >> getAllCompanies [
 { #category : 'as yet unclassified' }
 EmployeeRepository >> getAllEmployeesForCompanyId: aCompanyId [
 
-	^ (self getAllProgrammersForCompanyId: aCompanyId) , self getAllManagersForCompanyId: aCompanyId.
+	^ (self getAllProgrammersForCompanyId: aCompanyId) , (self
+		  getAllManagersForCompanyId: aCompanyId)
 ]
 
 { #category : 'as yet unclassified' }

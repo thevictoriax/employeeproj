@@ -7,25 +7,38 @@ Class {
 		'programmers',
 		'managers',
 		'mainLabel',
-		'addProgrammerBtn',
-		'addManagerBtn',
-		'saveToFileBtn'
+		'addBtn',
+		'deleteBtn'
 	],
 	#category : 'EmployeesPackage',
 	#package : 'EmployeesPackage'
 }
 
-{ #category : 'as yet unclassified' }
-CompanyWindowPresenter >> actionPage [
-^ (SpNotebookPage title: 'Дії' provider: [  ]) yourself
-	
-]
-
 { #category : 'initialization' }
 CompanyWindowPresenter >> connectPresenters [
 
-	managers whenSelectionChangedDo: [
-		managers selectedItem ifNotNil: [  ] ]
+	addBtn action: [
+		| dialog |
+		dialog := application newPresenter: AddEmployeeWindowPresenter.
+		dialog id: id.
+		dialog := dialog open whenClosedDo: [
+			          | employee |
+			          employee := dialog presenter employee.
+			          employee ifNotNil: [
+				          employee class = Programmer
+					          ifTrue: [
+					          application repository addProgrammer: employee ]
+					          ifFalse: [ application repository addManager: employee ] ].
+			          self redrawList ] ].
+	deleteBtn action: [
+		list selectedPageIndex = 1
+			ifTrue: [
+				managers selectedItem ifNotNil: [
+					application repository deleteManager: managers selectedItem ] ]
+			ifFalse: [
+				programmers selectedItem ifNotNil: [
+					application repository deleteProgrammer: programmers selectedItem ] ].
+		self redrawList ].
 ]
 
 { #category : 'layout' }
@@ -35,14 +48,14 @@ CompanyWindowPresenter >> defaultLayout [
 		  spacing: 20;
 		  add: mainLabel expand: false;
 		  add: list;
-		  add: (SpBoxLayout newHorizontal 
-		  spacing: 10;
-		  add: saveToFileBtn expand: false;
-		  add: addProgrammerBtn expand: false;
-		  add: addManagerBtn expand: false) withConstraints: [ :arg1 |
-		arg1
-			height: 40;
-			expand: false ];
+		  add: (SpBoxLayout newHorizontal
+				   spacing: 10;
+				   add: addBtn expand: false;
+				   add: deleteBtn expand: false)
+		  withConstraints: [ :arg1 |
+			  arg1
+				  height: 40;
+				  expand: false ];
 		  yourself
 ]
 
@@ -102,8 +115,7 @@ CompanyWindowPresenter >> initializeLists [
 	mainLabel label: (application repository getCompanyById: id) name.
 	list
 		addPage: self managersPage;
-		addPage: self programmersPage;
-		addPage: self actionPage.
+		addPage: self programmersPage
 ]
 
 { #category : 'initialization' }
@@ -112,9 +124,8 @@ CompanyWindowPresenter >> initializePresenters [
 	list := SpNotebookPresenter new.
 	managers := SpTablePresenter new.
 	mainLabel := self newLabel.
-	addProgrammerBtn := self newButton label: 'Додати програміста'.
-	addManagerBtn := self newButton label: 'Додати менеджера'.
-	saveToFileBtn := self newButton label: 'Зберегти у файл'.
+	addBtn := self newButton label: 'Додати'.
+	deleteBtn := self newButton label: 'Видалити'.
 	self initializeStyles
 ]
 
@@ -122,9 +133,8 @@ CompanyWindowPresenter >> initializePresenters [
 CompanyWindowPresenter >> initializeStyles [
 
 	mainLabel addStyle: 'title'.
-	saveToFileBtn addStyle: 'buttonGreenStyle'.
-	addProgrammerBtn addStyle: 'buttonGreenStyle'.
-	addManagerBtn addStyle: 'buttonGreenStyle'.
+	addBtn addStyle: 'buttonGreenStyle'.
+	deleteBtn addStyle: 'buttonGreenStyle'
 ]
 
 { #category : 'initialization' }
@@ -145,4 +155,16 @@ CompanyWindowPresenter >> managersPage [
 CompanyWindowPresenter >> programmersPage [
 ^ (SpNotebookPage title: 'Програмісти' provider: [ programmers ]) yourself
 
+]
+
+{ #category : 'as yet unclassified' }
+CompanyWindowPresenter >> redrawList [
+
+	managers items:
+		(application repository getAllManagersForCompanyId: id).
+	programmers items:
+		(application repository getAllProgrammersForCompanyId: id).
+	self managersPage.
+	self programmersPage.
+	self defaultLayout.
 ]
